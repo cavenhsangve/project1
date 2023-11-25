@@ -1,12 +1,29 @@
 <script lang="ts">
+	import { invalidate, invalidateAll } from "$app/navigation"
 	import type { PageData } from "./$types"
 
     export let data: PageData
 
     $: ({ posts } = data) //make data reactive
+    
+    function rerunLoadFunction() { //like a reload function 
+        // a)
+        invalidate('posts')
+
+        // b)
+        //invalidate('api/posts')
+
+        // c)
+        //invalidate(url => url.href.includes('posts'))
+
+        // d) nuke!
+        //invalidateAll()
+    }
 </script>
 
 <h1>Posts</h1>
+
+<button on:click={rerunLoadFunction}>Rerun</button>
 
 <p>Showing {posts.length} posts.</p>
 
